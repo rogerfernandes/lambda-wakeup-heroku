@@ -9,7 +9,7 @@ import (
 
 //Request - request from AWS Lambda
 type Request struct {
-	HerokuURL []string `json:"herokuapp"`
+	HerokuURLs []string `json:"heroku_urls"`
 }
 
 //Response - response log to AWS Lambda
@@ -23,12 +23,12 @@ func main() {
 
 func wakeUpHeroku(req Request) (Response, error) {
 	var log string
-	for i := range req.HerokuURL {
-		resp, err := http.Get(req.HerokuURL[i])
+	for i := range req.HerokuURLs {
+		resp, err := http.Get(req.HerokuURLs[i])
 		if err != nil {
-			log += "\n" + req.HerokuURL[i] + " - Failed!"
+			log += "\n" + req.HerokuURLs[i] + " - Failed!"
 		} else {
-			log += "\n" + req.HerokuURL[i] + " - Respond: " + getBodyContent(resp)
+			log += "\n" + req.HerokuURLs[i] + " - Respond: " + getBodyContent(resp)
 		}
 	}
 	return Response{Log: log}, nil
