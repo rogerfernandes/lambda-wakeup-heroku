@@ -18,10 +18,11 @@ type Response struct {
 }
 
 func main() {
-	lambda.Start(wakeUpHeroku)
+	lambda.Start(WakeUpHeroku)
 }
 
-func wakeUpHeroku(req Request) (Response, error) {
+// WakeUpHeroku is a function will make a simple GET request to your Heroku app through its url to wake it up
+func WakeUpHeroku(req Request) (Response, error) {
 	var log string
 	for i := range req.HerokuURLs {
 		resp, err := http.Get(req.HerokuURLs[i])
